@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>July English — IELTS Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#F7F5F0;--sf:#fff;--sf2:#F0EDE8;--ink:#1C1C1E;--ink2:#48484A;--ink3:#8E8E93;--gr:#1B5E3B;--grl:#34A56F;--grp:#E8F5EE;--bl:#0A3D6B;--bll:#2D7DD2;--blp:#E8F1FB;--rd:#8B1A1A;--rdp:#FDF0F0;--go:#8B6914;--bd:#E0DCD5;--bd2:#D0CBC2;--r:10px;--rs:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px}
+input,textarea,select,button{font-family:inherit;font-size:inherit}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+.header{background:var(--gr);color:#fff;padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.logo{font-family:'Playfair Display',serif;font-size:1.2rem}.logo em{color:#A8E6C3;font-style:italic}.logo span{opacity:.7;font-size:.85rem;margin-left:8px}
+.page{max-width:800px;margin:0 auto;padding:2.5rem 1.5rem}
+h1{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:600;margin-bottom:4px}
+.sub-h{font-size:.88rem;color:var(--ink3);margin-bottom:2rem}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:1.4rem;box-shadow:0 1px 2px rgba(0,0,0,.06);margin-bottom:1.2rem}
+.card-t{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.9rem}
+.field{margin-bottom:1rem}.field label{display:block;font-size:.8rem;font-weight:600;color:var(--ink2);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:var(--rs);padding:9px 12px;background:var(--bg);color:var(--ink);outline:none;transition:border .2s,box-shadow .2s;font-size:.9rem}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--grl);box-shadow:0 0 0 3px rgba(52,165,111,.12)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238E8E93'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+.ttabs{display:flex;gap:8px;margin-bottom:1.2rem}
+.ttab{flex:1;padding:11px;border:1.5px solid var(--bd);border-radius:var(--rs);cursor:pointer;text-align:center;background:var(--sf);font-size:.85rem;font-weight:500;color:var(--ink3);transition:all .2s}
+.ttab:hover{border-color:var(--grl);color:var(--gr)}.ttab.active{border-color:var(--gr);background:var(--grp);color:var(--gr)}
+.ttab .sub{display:block;font-size:.72rem;font-weight:400;margin-top:2px;opacity:.75}
+.pbox{background:var(--sf);border:1px solid var(--bd);border-left:4px solid var(--gr);border-radius:var(--r);padding:1.2rem 1.4rem;margin-bottom:1.2rem}
+.pmeta{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gr);margin-bottom:8px}
+.ptext{font-family:'Source Serif 4',serif;font-size:.95rem;line-height:1.75;color:var(--ink)}
+.pimg{width:100%;max-height:320px;object-fit:contain;margin-top:12px;border-radius:6px;border:1px solid var(--bd)}
+#essay{width:100%;min-height:240px;padding:14px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--ink);font-family:'Source Serif 4',serif;font-size:.93rem;line-height:1.8;resize:vertical;outline:none;transition:border .2s,box-shadow .2s}
+#essay:focus{border-color:var(--grl);box-shadow:0 0 0 3px rgba(52,165,111,.1)}
+.wcbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;font-size:.8rem;color:var(--ink3)}
+#wc{font-weight:600}#wc.ok{color:var(--gr)}#wc.warn{color:var(--go)}#wc.low{color:var(--rd)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--rs);border:none;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .18s}
+.btn-gr{background:var(--gr);color:#fff;width:100%;justify-content:center;padding:13px}.btn-gr:hover{background:#164d30}
+.btn-sec{background:var(--sf);border:1px solid var(--bd);color:var(--ink2)}.btn-sec:hover{background:var(--sf2)}
+.btn-bl{background:var(--bl);color:#fff}.btn-bl:hover{background:#082e52}
+.btn svg{width:15px;height:15px;flex-shrink:0}
+.lw{text-align:center;padding:3rem 1rem}
+.sp{width:40px;height:40px;border:3px solid var(--bd);border-top-color:var(--gr);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lt{font-size:.95rem;font-weight:500;color:var(--ink);margin-bottom:.4rem}.ls{font-size:.82rem;color:var(--ink3)}
+.lsteps{margin-top:1rem;display:flex;flex-direction:column;gap:5px}
+.step{font-size:.82rem;color:var(--ink3);opacity:0;transition:opacity .4s}.step.on{opacity:1}.step.done{color:var(--gr)}
+#rp{display:none;margin-top:1.5rem;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.obanner{background:linear-gradient(135deg,var(--gr),#0f3d22);color:#fff;border-radius:var(--r);padding:1.8rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;box-shadow:0 4px 16px rgba(27,94,59,.25)}
+.ob-l h2{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;opacity:.85;margin-bottom:4px}.ob-l .sub{font-size:.82rem;opacity:.65}
+.sbig{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:600;line-height:1;text-align:right}
+.sbig span{display:block;font-family:'Source Sans 3',sans-serif;font-size:.75rem;opacity:.7;margin-top:2px;letter-spacing:.06em;color:#fff}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
+.cc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:1rem;text-align:center}
+.cn{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.cs{font-family:'Playfair Display',serif;font-size:2rem;font-weight:600;color:var(--ink)}
+.cd{font-size:.7rem;color:var(--ink3);margin-top:3px}
+.rsec{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:1.2rem;margin-bottom:.8rem}
+.rsec-t{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem;display:flex;align-items:center;gap:7px}
+.rsec-t::after{content:'';flex:1;height:1px;background:var(--bd)}
+.ei{background:var(--rdp);border-left:3px solid #E24B4A;border-radius:0 var(--rs) var(--rs) 0;padding:10px 14px;margin-bottom:8px}
+.eo{font-size:.88rem;color:var(--rd);margin-bottom:4px}.eo strong{text-decoration:line-through;opacity:.7}
+.ef{font-size:.85rem;color:var(--ink2)}.ef strong{color:var(--gr)}
+.ee{font-size:.8rem;color:var(--ink3);margin-top:4px;font-style:italic}
+.si{background:var(--grp);border-left:3px solid var(--grl);border-radius:0 var(--rs) var(--rs) 0;padding:10px 14px;margin-bottom:8px;font-size:.88rem;color:var(--ink2);line-height:1.6}
+.si::before{content:'→ ';color:var(--gr);font-weight:600}
+.cmt{font-family:'Source Serif 4',serif;font-size:.92rem;line-height:1.8;color:var(--ink2)}
+.ract{display:flex;gap:10px;margin-top:1rem}.ract .btn{flex:1;justify-content:center}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:10px 18px;border-radius:var(--rs);font-size:.85rem;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:all .3s;z-index:999}
+.toast.show{transform:translateY(0);opacity:1}.toast.ok{border-left:3px solid var(--grl)}.toast.err{border-left:3px solid #E24B4A}
+@media(max-width:640px){.cgrid{grid-template-columns:repeat(2,1fr)}.sbig{font-size:2.6rem}.ract{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">July <em>English</em> <span>IELTS Writing</span></div>
+</header>
+<div class="page">
+  <h1>Bài kiểm tra Writing</h1>
+  <p class="sub-h">Chọn đề bài, viết bài và nhận kết quả ngay sau khi nộp.</p>
+
+  <div class="card">
+    <div class="card-t">Thông tin học sinh</div>
+    <div class="field"><label>Họ và tên</label><input type="text" id="sname" placeholder="Nhập họ và tên đầy đủ..."></div>
+  </div>
+
+  <div class="ttabs">
+    <button class="ttab active" onclick="selTask('task2',this)">Writing Task 2<span class="sub">Essay · tối thiểu 250 từ</span></button>
+    <button class="ttab" onclick="selTask('task1',this)">Writing Task 1<span class="sub">Report / Letter · tối thiểu 150 từ</span></button>
+  </div>
+
+  <div class="card">
+    <div class="card-t">Chọn đề bài</div>
+    <div class="field"><label>Đề bài</label>
+      <select id="psel" onchange="loadPrompt()"><option value="">-- Đang tải... --</option></select>
+    </div>
+  </div>
+
+  <div id="pdisplay" style="display:none">
+    <div class="pbox">
+      <div class="pmeta" id="pmeta">WRITING TASK 2</div>
+      <div class="ptext" id="ptext"></div>
+      <img id="pimg" class="pimg" style="display:none" alt="Biểu đồ">
+    </div>
+  </div>
+
+  <div id="esec" style="display:none">
+    <div class="card" style="padding:1.2rem">
+      <div class="card-t">Bài làm của bạn</div>
+      <textarea id="essay" placeholder="Bắt đầu viết bài tại đây..."></textarea>
+      <div class="wcbar">
+        <span id="wc" class="low">0 từ</span>
+        <span id="wchint" style="font-size:.78rem;color:var(--ink3)">Tối thiểu 250 từ cho Task 2</span>
+      </div>
+      <button class="btn btn-gr" onclick="submit()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        Nộp bài & Nhận kết quả
+      </button>
+    </div>
+  </div>
+
+  <div id="lw" class="lw" style="display:none">
+    <div class="sp"></div>
+    <div class="lt">Đang chấm bài của bạn...</div>
+    <div class="ls">Vui lòng không tắt trang</div>
+    <div class="lsteps">
+      <div class="step" id="s1">📖 Đọc và phân tích bài viết...</div>
+      <div class="step" id="s2">📐 Đánh giá 4 tiêu chí IELTS...</div>
+      <div class="step" id="s3">🔍 Xác định lỗi ngữ pháp và từ vựng...</div>
+      <div class="step" id="s4">✅ Hoàn thiện nhận xét...</div>
+    </div>
+  </div>
+
+  <div id="rp">
+    <div class="obanner">
+      <div class="ob-l"><h2>Kết quả chấm bài</h2><div class="sub" id="rmeta"></div></div>
+      <div><div class="sbig" id="roverall">—</div><span style="display:block;font-family:'Source Sans 3',sans-serif;font-size:.75rem;opacity:.7;text-align:right;margin-top:2px;letter-spacing:.06em;color:#fff">OVERALL BAND</span></div>
+    </div>
+    <div class="cgrid">
+      <div class="cc"><div class="cn" id="c-ta-n">TA</div><div class="cs" id="c-ta">—</div><div class="cd" id="c-ta-d">Task Achievement</div></div>
+      <div class="cc"><div class="cn">CC</div><div class="cs" id="c-cc">—</div><div class="cd">Coherence & Cohesion</div></div>
+      <div class="cc"><div class="cn">LR</div><div class="cs" id="c-lr">—</div><div class="cd">Lexical Resource</div></div>
+      <div class="cc"><div class="cn">GRA</div><div class="cs" id="c-gra">—</div><div class="cd">Grammatical Range</div></div>
+    </div>
+    <div class="rsec"><div class="rsec-t">Nhận xét tổng thể</div><div class="cmt" id="rcmt"></div></div>
+    <div class="rsec" id="errsec"><div class="rsec-t">Lỗi sai cần sửa</div><div id="rerrs"></div></div>
+    <div class="rsec" id="sugsec"><div class="rsec-t">Gợi ý cải thiện</div><div id="rsugs"></div></div>
+    <div class="ract">
+      <button class="btn btn-sec" onclick="reset()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9"/><path d="M3 3v6h6"/></svg>Làm bài mới
+      </button>
+      <button class="btn btn-bl" onclick="dlPDF()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="12" y1="12" x2="12" y2="18"/><polyline points="9 15 12 18 15 15"/></svg>Tải kết quả PDF
+      </button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+// ═══════ CẤU HÌNH — giảng viên dán URL Apps Script vào đây ═══════
+const API_URL = 'https://script.google.com/macros/s/AKfycbyaLgQimbwMSVOUCRTyXO0tz1kJM5FVl-5Q6mab_AnMPTQBycwQPrJgWVwZ1Pp81M4y/exec';
+// VD: 'https://script.google.com/macros/s/AKfycb.../exec'
+// ═════════════════════════════════════════════════════════════════
+
+let curTask='task2', curResult=null, prompts=[];
+
+window.addEventListener('load',()=>{
+  document.getElementById('essay').addEventListener('input',updateWC);
+  if(!API_URL){ document.getElementById('psel').innerHTML='<option>-- Liên hệ giảng viên để được cấp link --</option>'; return; }
+  loadPrompts();
+});
+
+async function apig(p){ const r=await fetch(API_URL+'?'+new URLSearchParams(p)); const d=await r.json(); if(!d.ok) throw new Error(d.error); return d; }
+async function apip(b){ const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}); const d=await r.json(); if(!d.ok) throw new Error(d.error); return d; }
+
+async function loadPrompts(){
+  try{ const d=await apig({action:'getPrompts'}); prompts=d.prompts||[]; renderSel(); }
+  catch(e){ toast('Không tải được đề bài: '+e.message,'err'); }
+}
+
+function renderSel(){
+  const sel=document.getElementById('psel');
+  const f=prompts.filter(p=>p.type===curTask);
+  sel.innerHTML='<option value="">-- Chọn đề bài --</option>';
+  f.forEach(p=>{ const o=document.createElement('option'); o.value=p.id; o.textContent=p.title; sel.appendChild(o); });
+}
+
+function selTask(t,btn){
+  curTask=t;
+  document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  document.getElementById('wchint').textContent=t==='task2'?'Tối thiểu 250 từ cho Task 2':'Tối thiểu 150 từ cho Task 1';
+  renderSel();
+  ['pdisplay','esec','rp'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('psel').value='';
+}
+
+function loadPrompt(){
+  const id=document.getElementById('psel').value;
+  if(!id){ ['pdisplay','esec'].forEach(x=>document.getElementById(x).style.display='none'); return; }
+  const p=prompts.find(x=>x.id===id); if(!p) return;
+  document.getElementById('pmeta').textContent=p.type==='task2'?'WRITING TASK 2':'WRITING TASK 1';
+  document.getElementById('ptext').textContent=p.content;
+  const img=document.getElementById('pimg');
+  if(p.image){img.src=p.image;img.style.display='block';}else{img.style.display='none';}
+  document.getElementById('pdisplay').style.display='block';
+  document.getElementById('esec').style.display='block';
+  document.getElementById('rp').style.display='none';
+  document.getElementById('essay').value=''; updateWC();
+}
+
+function updateWC(){
+  const txt=document.getElementById('essay').value.trim();
+  const n=txt?txt.split(/\s+/).filter(w=>w).length:0;
+  const min=curTask==='task2'?250:150;
+  const el=document.getElementById('wc');
+  el.textContent=n+' từ'; el.className=n>=min?'ok':n>=min*.85?'warn':'low';
+}
+
+async function submit(){
+  const name=document.getElementById('sname').value.trim();
+  const pid=document.getElementById('psel').value;
+  const essay=document.getElementById('essay').value.trim();
+  if(!name){toast('Vui lòng nhập họ và tên!','err');return;}
+  if(!pid){toast('Vui lòng chọn đề bài!','err');return;}
+  if(!essay){toast('Vui lòng viết bài trước khi nộp!','err');return;}
+  const min=curTask==='task2'?250:150;
+  if(essay.split(/\s+/).filter(w=>w).length<Math.floor(min*.7)){toast(`Bài viết quá ngắn (cần ${min} từ)`,'err');return;}
+  const p=prompts.find(x=>x.id===pid);
+  document.getElementById('esec').style.display='none';
+  document.getElementById('rp').style.display='none';
+  document.getElementById('lw').style.display='block';
+  ['s1','s2','s3','s4'].forEach((s,i)=>setTimeout(()=>{
+    const el=document.getElementById(s);if(!el)return;
+    el.classList.add('on');if(i>0)document.getElementById(['s1','s2','s3','s4'][i-1]).classList.add('done');
+  },i*900));
+  try{
+    const data=await apig({action:'gradeEssay',promptContent:p.content,essay,taskType:curTask});
+    await apip({action:'saveSubmission',studentName:name,promptId:pid,promptTitle:p.title,taskType:curTask,essay,result:data.result});
+    setTimeout(()=>{ document.getElementById('lw').style.display='none'; showResult(data.result,name,p); },400);
+  }catch(e){
+    document.getElementById('lw').style.display='none';
+    document.getElementById('esec').style.display='block';
+    toast('Có lỗi xảy ra: '+e.message,'err');
+  }
+}
+
+function showResult(r,name,p){
+  curResult={r,name,p,taskType:curTask};
+  document.getElementById('rp').style.display='block';
+  document.getElementById('roverall').textContent=r.overall??'—';
+  document.getElementById('rmeta').textContent=name+' — '+(curTask==='task2'?'Task 2':'Task 1')+': '+p.title;
+  ['ta','cc','lr','gra'].forEach(k=>document.getElementById('c-'+k).textContent=r[k]??'—');
+  document.getElementById('c-ta-n').textContent=curTask==='task2'?'TA':'TR';
+  document.getElementById('c-ta-d').textContent=curTask==='task2'?'Task Achievement':'Task Response';
+  document.getElementById('rcmt').textContent=r.comment||'';
+  const ew=document.getElementById('rerrs'); ew.innerHTML='';
+  if(r.errors?.length){
+    r.errors.forEach(e=>{ ew.innerHTML+=`<div class="ei"><div class="eo">❌ <strong>${esc(e.original)}</strong></div><div class="ef">✅ Sửa thành: <strong>${esc(e.fix)}</strong></div><div class="ee">${esc(e.explanation)}</div></div>`; });
+    document.getElementById('errsec').style.display='block';
+  }else document.getElementById('errsec').style.display='none';
+  const sw=document.getElementById('rsugs'); sw.innerHTML='';
+  if(r.suggestions?.length){
+    r.suggestions.forEach(s=>{ sw.innerHTML+=`<div class="si">${esc(s)}</div>`; });
+    document.getElementById('sugsec').style.display='block';
+  }else document.getElementById('sugsec').style.display='none';
+  document.getElementById('rp').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function reset(){
+  document.getElementById('essay').value='';
+  document.getElementById('psel').value='';
+  ['pdisplay','esec','rp'].forEach(id=>document.getElementById(id).style.display='none');
+  ['s1','s2','s3','s4'].forEach(s=>{ const el=document.getElementById(s); if(el) el.classList.remove('on','done'); });
+  updateWC(); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function dlPDF(){
+  if(!curResult){toast('Chưa có kết quả!','err');return;}
+  const{r,name,p,taskType}=curResult;
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const W=210,M=18,CW=W-M*2;let y=20;
+  doc.setFillColor(27,94,59);doc.rect(0,0,W,28,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(15);doc.setFont('helvetica','bold');
+  doc.text('July English — IELTS Writing',M,12);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');
+  doc.text('Kết quả bài kiểm tra Writing',M,20);
+  doc.text(new Date().toLocaleDateString('vi-VN'),W-M,20,{align:'right'});y=38;
+  doc.setTextColor(28,28,30);doc.setFontSize(13);doc.setFont('helvetica','bold');doc.text(name,M,y);y+=6;
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(90,90,110);
+  doc.text((taskType==='task2'?'Writing Task 2':'Writing Task 1')+' — '+p.title,M,y);y+=10;
+  doc.setFillColor(27,94,59);doc.roundedRect(M,y,CW,22,3,3,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','normal');
+  doc.text('OVERALL BAND SCORE',M+6,y+8);doc.setFontSize(20);doc.setFont('helvetica','bold');
+  doc.text(String(r.overall??'—'),M+6,y+18);
+  [{lbl:'TA',val:r.ta},{lbl:'CC',val:r.cc},{lbl:'LR',val:r.lr},{lbl:'GRA',val:r.gra}].forEach((c,i)=>{
+    const cx=M+62+i*36;doc.setFontSize(8);doc.setFont('helvetica','normal');doc.text(c.lbl,cx,y+8);
+    doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(String(c.val??'—'),cx,y+18);
+  });y+=30;
+  doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(70,70,80);doc.text('ĐỀ BÀI',M,y);y+=5;
+  doc.setFillColor(248,245,240);const pL=doc.splitTextToSize(p.content,CW-8);
+  doc.rect(M,y,CW,pL.length*4.5+6,'F');doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(28,28,30);
+  doc.text(pL,M+4,y+5);y+=pL.length*4.5+12;
+  if(y>250){doc.addPage();y=20;}
+  doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(27,94,59);doc.text('NHẬN XÉT TỔNG THỂ',M,y);y+=5;
+  const cL=doc.splitTextToSize(r.comment||'',CW);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(40,40,55);doc.text(cL,M,y);y+=cL.length*5+8;
+  if(r.errors?.length){
+    if(y>250){doc.addPage();y=20;}
+    doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(139,26,26);doc.text('LỖI SAI CẦN SỬA',M,y);y+=5;
+    r.errors.forEach(e=>{
+      if(y>265){doc.addPage();y=20;}
+      const l1=doc.splitTextToSize('✗  '+e.original+'  →  '+e.fix,CW-8);
+      const l2=doc.splitTextToSize(e.explanation||'',CW-8);const h=(l1.length+l2.length)*4.5+6;
+      doc.setFillColor(253,240,240);doc.rect(M,y,CW,h,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(139,26,26);doc.text(l1,M+4,y+4.5);
+      doc.setFont('helvetica','italic');doc.setTextColor(80,80,90);doc.text(l2,M+4,y+4.5+l1.length*4.5);y+=h+4;
+    });y+=4;
+  }
+  if(r.suggestions?.length){
+    if(y>250){doc.addPage();y=20;}
+    doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(27,94,59);doc.text('GỢI Ý CẢI THIỆN',M,y);y+=5;
+    r.suggestions.forEach(s=>{
+      if(y>265){doc.addPage();y=20;}
+      const lines=doc.splitTextToSize('→  '+s,CW-8);const h=lines.length*4.5+5;
+      doc.setFillColor(232,245,238);doc.rect(M,y,CW,h,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(27,94,59);doc.text(lines,M+4,y+4);y+=h+4;
+    });
+  }
+  doc.setFontSize(7.5);doc.setTextColor(160,160,170);doc.setFont('helvetica','normal');
+  doc.text('July English — IELTS Writing Practice',W/2,290,{align:'center'});
+  doc.save('KetQua_'+name.replace(/\s+/g,'_')+'.pdf');
+  toast('Đã tải PDF!','ok');
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);}
+</script>
+</body>
+</html>

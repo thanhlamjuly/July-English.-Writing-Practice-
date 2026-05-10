@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>July English — Giảng viên</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#F7F5F0;--sf:#fff;--sf2:#F0EDE8;--ink:#1C1C1E;--ink2:#48484A;--ink3:#8E8E93;--gr:#1B5E3B;--grl:#34A56F;--grp:#E8F5EE;--bl:#0A3D6B;--bll:#2D7DD2;--blp:#E8F1FB;--rd:#8B1A1A;--rdp:#FDF0F0;--go:#8B6914;--bd:#E0DCD5;--bd2:#D0CBC2;--r:10px;--rs:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px}
+input,textarea,select,button{font-family:inherit;font-size:inherit}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+
+.header{background:var(--bl);color:#fff;padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.logo{font-family:'Playfair Display',serif;font-size:1.15rem}.logo em{color:#7EC8A0;font-style:italic}.logo span{opacity:.65;font-size:.85rem;margin-left:8px}
+.hnav{display:flex;gap:4px}
+.nb{background:none;border:none;color:rgba(255,255,255,.5);padding:7px 18px;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;transition:all .2s}
+.nb:hover{color:#fff;background:rgba(255,255,255,.1)}.nb.active{color:#fff;background:rgba(255,255,255,.18)}
+
+.tv{display:none;animation:fi .25s ease}.tv.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* LOCK */
+.lkwrap{max-width:420px;margin:5rem auto;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:2.5rem;box-shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);text-align:center}
+.lkwrap .ico{font-size:2.2rem;margin-bottom:.75rem}
+.lkwrap h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.4rem}
+.lkwrap p{font-size:.86rem;color:var(--ink3);margin-bottom:1.5rem}
+.lkwrap input{width:100%;border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;font-size:.95rem;outline:none;background:var(--bg);transition:border .2s;margin-bottom:1rem}
+.lkwrap input:focus{border-color:var(--bll)}.lkerr{color:var(--rd);font-size:.82rem;margin-top:.5rem;display:none}
+.hint{margin-top:1.2rem;font-size:.78rem;color:var(--ink3);line-height:1.7}
+.hint code{background:var(--sf2);padding:1px 6px;border-radius:3px;font-family:monospace}
+.hint a{color:var(--bll)}
+
+/* LAYOUT */
+.pw{max-width:820px;margin:0 auto;padding:2.5rem 1.5rem}
+.pww{max-width:1140px;margin:0 auto;padding:2.5rem 1.5rem}
+.phrow{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem}
+h1{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:600;margin-bottom:4px}
+.subh{font-size:.88rem;color:var(--ink3)}
+
+/* CARDS */
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:1.4rem;box-shadow:0 1px 2px rgba(0,0,0,.06);margin-bottom:1.2rem}
+.card-t{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.9rem}
+.field{margin-bottom:1rem}.field label{display:block;font-size:.8rem;font-weight:600;color:var(--ink2);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:var(--rs);padding:9px 12px;background:var(--bg);color:var(--ink);outline:none;transition:border .2s,box-shadow .2s;font-size:.9rem}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--grl);box-shadow:0 0 0 3px rgba(52,165,111,.12)}
+.field textarea{resize:vertical;min-height:110px}
+
+/* BTNS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--rs);border:none;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .18s}
+.btn-bl{background:var(--bl);color:#fff}.btn-bl:hover{background:#082e52}
+.btn-gr{background:var(--gr);color:#fff}.btn-gr:hover{background:#164d30}
+.btn-sec{background:var(--sf);border:1px solid var(--bd);color:var(--ink2)}.btn-sec:hover{background:var(--sf2)}
+.btn-red{background:var(--rdp);color:var(--rd);border:1px solid #f0c0c0}.btn-red:hover{background:#fce8e8}
+.btn-sm{padding:6px 14px;font-size:.8rem}.btn-full{width:100%;justify-content:center}
+.btn svg{width:15px;height:15px;flex-shrink:0}
+
+/* STATS */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:1.2rem;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.sv{font-family:'Playfair Display',serif;font-size:2rem;font-weight:600;color:var(--ink)}.sl{font-size:.78rem;color:var(--ink3);margin-top:3px}
+
+/* FILTER */
+.fbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center}
+.fchip{padding:5px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--sf);color:var(--ink2);cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s}
+.fchip:hover{border-color:var(--bll);color:var(--bl)}.fchip.active{background:var(--blp);border-color:var(--bll);color:var(--bl)}
+.fsearch{flex:1;min-width:160px;padding:7px 14px;border:1px solid var(--bd);border-radius:20px;font-size:.82rem;background:var(--sf);color:var(--ink);outline:none}
+.fsearch:focus{border-color:var(--bll)}
+
+/* TABLE */
+.stable{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.sth{display:grid;grid-template-columns:1.8fr 1.5fr .65fr .55fr .55fr .55fr .55fr auto;padding:10px 16px;background:var(--sf2);border-bottom:1px solid var(--bd);font-size:.73rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.srow{border-bottom:1px solid var(--bd)}.srow:last-child{border-bottom:none}
+.srow-m{display:grid;grid-template-columns:1.8fr 1.5fr .65fr .55fr .55fr .55fr .55fr auto;padding:12px 16px;align-items:center;cursor:pointer;transition:background .15s}
+.srow-m:hover{background:var(--sf2)}
+.sn{font-weight:500;font-size:.88rem;color:var(--ink)}.st{font-size:.73rem;color:var(--ink3);margin-top:1px}
+.sp{font-size:.82rem;color:var(--ink2)}
+.badge{display:inline-block;font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:500;margin-top:2px}
+.b1{background:var(--blp);color:var(--bl)}.b2{background:var(--grp);color:var(--gr)}
+.ss{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;text-align:center}
+.sh{color:var(--gr)}.sm{color:var(--go)}.sl2{color:var(--rd)}
+.scr{font-size:.8rem;color:var(--ink3);text-align:center}
+.xbtn{background:none;border:none;color:var(--ink3);cursor:pointer;padding:4px;border-radius:4px;transition:all .2s}
+.xbtn:hover{color:var(--bll);background:var(--blp)}.xbtn svg{width:16px;height:16px;transition:transform .2s;display:block}
+.xbtn.open svg{transform:rotate(180deg)}
+.det{display:none;padding:16px;background:var(--bg);border-top:1px solid var(--bd)}.det.open{display:block}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.db{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:12px}
+.db-t{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.de{font-family:'Source Serif 4',serif;font-size:.84rem;line-height:1.7;color:var(--ink2);white-space:pre-wrap;max-height:200px;overflow-y:auto}
+.dc{font-size:.87rem;color:var(--ink2);line-height:1.65}
+.derr{margin-top:8px}.di{background:var(--rdp);border-left:2px solid #E24B4A;padding:5px 9px;margin-bottom:4px;font-size:.8rem}
+.dact{display:flex;gap:8px;justify-content:flex-end}
+.empty{text-align:center;padding:4rem 2rem;color:var(--ink3)}.empty svg{width:48px;height:48px;opacity:.25;display:block;margin:0 auto 1rem}
+
+/* ADMIN FORM */
+.addcard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.addcard h2{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1.2rem}
+.ttog{display:flex;gap:8px;margin-bottom:1.2rem}
+.tt{flex:1;padding:9px;border:1.5px solid var(--bd);border-radius:var(--rs);cursor:pointer;background:var(--sf);font-size:.85rem;font-weight:500;color:var(--ink3);transition:all .2s;text-align:center}
+.tt.t2{border-color:var(--gr);background:var(--grp);color:var(--gr)}.tt.t1{border-color:var(--bll);background:var(--blp);color:var(--bl)}
+.uzone{border:2px dashed var(--bd2);border-radius:var(--r);padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;color:var(--ink3);font-size:.88rem;line-height:1.5}
+.uzone:hover{border-color:var(--bll);color:var(--bll);background:var(--blp)}.uzone.has{border-style:solid;border-color:var(--grl);background:var(--grp);color:var(--gr)}
+#uprev{max-width:100%;max-height:200px;border-radius:6px;margin-top:10px;display:none}
+#upfile{display:none}
+
+/* PROMPT LIST */
+.pi{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:1rem 1.2rem;display:flex;align-items:center;gap:12px;box-shadow:0 1px 2px rgba(0,0,0,.06);margin-bottom:8px}
+.pico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.pt1{background:var(--blp)}.pt2{background:var(--grp)}
+.pinfo{flex:1;min-width:0}.ptitle{font-weight:600;font-size:.92rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pmeta{font-size:.78rem;color:var(--ink3);margin-top:2px}.pact{display:flex;gap:6px;flex-shrink:0}
+.ep{text-align:center;padding:2.5rem;color:var(--ink3);font-size:.88rem;border:2px dashed var(--bd);border-radius:var(--r)}
+
+/* API BAR */
+.apibar{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;font-size:.82rem;color:var(--ink2);display:none;align-items:center;gap:10px;margin-bottom:1.5rem}
+.apibar input{flex:1;background:transparent;border:none;color:var(--ink);font-size:.82rem;outline:none;font-family:monospace}
+.apibar .sv{background:var(--bl);color:#fff;border:none;padding:4px 14px;border-radius:4px;cursor:pointer;font-size:.78rem;font-weight:600;white-space:nowrap}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:10px 18px;border-radius:var(--rs);font-size:.85rem;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:all .3s;z-index:999}
+.toast.show{transform:translateY(0);opacity:1}.toast.ok{border-left:3px solid var(--grl)}.toast.err{border-left:3px solid #E24B4A}
+
+/* LOADING */
+.spinner{width:32px;height:32px;border:3px solid var(--bd);border-top-color:var(--bll);border-radius:50%;animation:spin .8s linear infinite;margin:2rem auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:900px){.sth,.srow-m{grid-template-columns:1fr auto}.sgrid{grid-template-columns:repeat(2,1fr)}.dgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">July <em>English</em> <span>Giảng viên</span></div>
+  <nav class="hnav">
+    <button class="nb active" onclick="showTab('teacher',this)">📊 Kết quả</button>
+    <button class="nb" onclick="showTab('admin',this)">⚙️ Đề bài</button>
+  </nav>
+</header>
+
+<!-- ═══════ TEACHER TAB ═══════ -->
+<div id="tab-teacher" class="tv active">
+<div class="pww">
+  <div class="phrow">
+    <div><h1>Kết quả học sinh</h1><p class="subh">Xem và quản lý toàn bộ bài nộp.</p></div>
+    <div style="display:flex;gap:8px;margin-top:.5rem">
+      <button class="btn btn-sec btn-sm" onclick="loadSubs()">🔄 Tải lại</button>
+      <button class="btn btn-sec btn-sm" onclick="exportCSV()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Xuất CSV
+      </button>
+    </div>
+  </div>
+  <div class="sgrid">
+    <div class="sc"><div class="sv" id="st-total">—</div><div class="sl">Bài đã nộp</div></div>
+    <div class="sc"><div class="sv" id="st-avg">—</div><div class="sl">Điểm trung bình</div></div>
+    <div class="sc"><div class="sv" id="st-hi">—</div><div class="sl">Điểm cao nhất</div></div>
+    <div class="sc"><div class="sv" id="st-lo">—</div><div class="sl">Điểm thấp nhất</div></div>
+  </div>
+  <div class="fbar">
+    <button class="fchip active" onclick="setF('all',this)">Tất cả</button>
+    <button class="fchip" onclick="setF('task1',this)">Task 1</button>
+    <button class="fchip" onclick="setF('task2',this)">Task 2</button>
+    <input class="fsearch" type="text" id="fsearch" placeholder="Tìm tên học sinh hoặc đề bài..." oninput="renderTable()">
+  </div>
+  <div id="twrap"></div>
+</div>
+</div>
+
+<!-- ═══════ ADMIN TAB ═══════ -->
+<div id="tab-admin" class="tv">
+  <!-- Lock screen -->
+  <div id="alock">
+    <div class="lkwrap">
+      <div class="ico">🔐</div>
+      <h2>Khu vực giảng viên</h2>
+      <p>Nhập mật khẩu để quản lý đề bài</p>
+      <input type="password" id="pwinput" placeholder="Mật khẩu..." onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="btn btn-bl btn-full" onclick="doLogin()">Đăng nhập</button>
+      <div class="lkerr" id="pwerr">Mật khẩu không đúng. Thử lại.</div>
+      <div class="hint">
+        Mật khẩu mặc định: <code>ielts2024</code><br>
+        Đổi mật khẩu: mở file bằng Notepad, tìm <code>const ADMIN_PW</code><br>
+        Gemini API key miễn phí: <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin content -->
+  <div id="acontent" style="display:none">
+  <div class="pw">
+    <div class="phrow">
+      <div><h1>Quản lý đề bài</h1><p class="subh">Thêm, sửa, xóa đề bài cho học sinh.</p></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:.5rem">
+        <button class="btn btn-sec btn-sm" onclick="toggleAPI()">⚙️ Cài đặt</button>
+        <button class="btn btn-sec btn-sm" onclick="doLogout()">Đăng xuất</button>
+      </div>
+    </div>
+
+    <div class="apibar" id="apibar">
+      <span>🔑 Apps Script URL:</span>
+      <input type="text" id="url-input" placeholder="https://script.google.com/macros/s/.../exec">
+      <button class="sv" onclick="saveURL()">Lưu</button>
+    </div>
+
+    <div class="card">
+      <div class="card-t">Đề bài hiện có (<span id="pcnt">0</span>)</div>
+      <div id="plist"><div class="spinner"></div></div>
+    </div>
+
+    <div class="addcard" id="addcard">
+      <h2 id="ftitle">✚ Thêm đề bài mới</h2>
+      <div class="ttog">
+        <button class="tt t2" onclick="setFT('task2',this)" id="ft2">Writing Task 2</button>
+        <button class="tt" onclick="setFT('task1',this)" id="ft1">Writing Task 1</button>
+      </div>
+      <div class="field"><label>Tiêu đề đề bài</label><input type="text" id="f-title" placeholder="VD: Technology & Society"></div>
+      <div class="field"><label>Nội dung đề bài (question prompt)</label><textarea id="f-content" placeholder="Nhập nội dung đề bài đầy đủ..."></textarea></div>
+      <div class="field" id="imgfield" style="display:none">
+        <label>Hình ảnh biểu đồ / bản đồ / sơ đồ <span style="font-weight:400;color:var(--ink3)">(Task 1)</span></label>
+        <div class="uzone" id="uzone" onclick="document.getElementById('upfile').click()">
+          <div id="utxt">📁 Kéo thả hoặc <strong>click để chọn ảnh</strong></div>
+          <div style="font-size:.76rem;margin-top:4px;opacity:.7">PNG · JPG · GIF · WEBP — tối đa 5MB</div>
+          <img id="uprev">
+        </div>
+        <input type="file" id="upfile" accept="image/*" onchange="handleImg(event)">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:.5rem">
+        <button class="btn btn-gr btn-full" onclick="savePrompt()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Lưu đề bài
+        </button>
+        <button class="btn btn-sec" id="cancelbtn" style="display:none" onclick="cancelEdit()">Hủy</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════
+const ADMIN_PW  = 'ielts2024'; // ← đổi mật khẩu tại đây
+const URL_KEY   = 'ielts_api_url';
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let ftype='all', editId=null, ftype_form='task2', fimg=null, subs=[], prompts=[];
+
+function getURL(){ return localStorage.getItem(URL_KEY)||''; }
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+window.addEventListener('load',()=>{
+  const u=getURL(); if(u) document.getElementById('url-input').value=u;
+  loadSubs();
+});
+
+// ═══════════════════════════════════════════════════════
+//  TAB
+// ═══════════════════════════════════════════════════════
+function showTab(name,btn){
+  document.querySelectorAll('.tv').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='teacher') loadSubs();
+  if(name==='admin'&&document.getElementById('acontent').style.display!=='none') loadPrompts();
+}
+
+// ═══════════════════════════════════════════════════════
+//  API HELPERS
+// ═══════════════════════════════════════════════════════
+async function apig(p){
+  const url=getURL(); if(!url) throw new Error('Chưa cấu hình URL. Vào tab Đề bài → Cài đặt.');
+  const r=await fetch(url+'?'+new URLSearchParams(p));
+  const d=await r.json(); if(!d.ok) throw new Error(d.error); return d;
+}
+async function apip(b){
+  const url=getURL(); if(!url) throw new Error('Chưa cấu hình URL.');
+  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+  const d=await r.json(); if(!d.ok) throw new Error(d.error); return d;
+}
+
+// ═══════════════════════════════════════════════════════
+//  TEACHER: SUBMISSIONS
+// ═══════════════════════════════════════════════════════
+async function loadSubs(){
+  document.getElementById('twrap').innerHTML='<div class="spinner"></div>';
+  try{
+    const d=await apig({action:'getSubmissions'});
+    subs=d.submissions||[];
+    renderStats(); renderTable();
+  }catch(e){
+    document.getElementById('twrap').innerHTML=`<div class="empty"><p>⚠️ ${esc(e.message)}</p></div>`;
+    ['st-total','st-avg','st-hi','st-lo'].forEach(id=>document.getElementById(id).textContent='—');
+  }
+}
+
+function renderStats(){
+  document.getElementById('st-total').textContent=subs.length||'0';
+  if(subs.length){
+    const sc=subs.map(s=>s.result?.overall||0).filter(Boolean);
+    document.getElementById('st-avg').textContent=sc.length?(sc.reduce((a,b)=>a+b,0)/sc.length).toFixed(1):'—';
+    document.getElementById('st-hi').textContent=sc.length?Math.max(...sc):'—';
+    document.getElementById('st-lo').textContent=sc.length?Math.min(...sc):'—';
+  }else{['st-avg','st-hi','st-lo'].forEach(id=>document.getElementById(id).textContent='—');}
+}
+
+function setF(t,btn){ftype=t;document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
+
+function renderTable(){
+  let data=[...subs];
+  const q=(document.getElementById('fsearch')?.value||'').toLowerCase();
+  if(ftype!=='all') data=data.filter(s=>s.taskType===ftype);
+  if(q) data=data.filter(s=>s.studentName.toLowerCase().includes(q)||(s.promptTitle||'').toLowerCase().includes(q));
+  const wrap=document.getElementById('twrap');
+  if(!data.length){
+    wrap.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><p>Chưa có bài nộp nào</p></div>';
+    return;
+  }
+  let html='<div class="stable"><div class="sth"><div>Học sinh</div><div>Đề bài</div><div style="text-align:center">Overall</div><div style="text-align:center">TA</div><div style="text-align:center">CC</div><div style="text-align:center">LR</div><div style="text-align:center">GRA</div><div></div></div>';
+  data.forEach((s,i)=>{
+    const r=s.result||{};
+    const sc=r.overall>=7?'sh':r.overall>=5.5?'sm':'sl2';
+    const did='det-'+i;
+    html+=`<div class="srow">
+<div class="srow-m" onclick="togDet('${did}',this)">
+  <div><div class="sn">${esc(s.studentName)}</div><div class="st">${s.timestamp||''}</div></div>
+  <div><div class="sp">${esc(s.promptTitle||'')}</div><span class="badge ${s.taskType==='task1'?'b1':'b2'}">${s.taskType==='task1'?'Task 1':'Task 2'}</span></div>
+  <div class="ss ${sc}">${r.overall??'—'}</div>
+  <div class="scr">${r.ta??'—'}</div><div class="scr">${r.cc??'—'}</div><div class="scr">${r.lr??'—'}</div><div class="scr">${r.gra??'—'}</div>
+  <button class="xbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+</div>
+<div class="det" id="${did}">
+  <div class="dgrid">
+    <div class="db"><div class="db-t">Bài làm</div><div class="de">${esc(s.essay||'')}</div></div>
+    <div class="db"><div class="db-t">Nhận xét</div><div class="dc">${esc(r.comment||'')}</div>
+      ${r.errors?.length?'<div class="derr">'+r.errors.slice(0,3).map(e=>`<div class="di"><div style="color:var(--rd);font-size:.8rem">❌ ${esc(e.original)}</div><div style="font-size:.8rem;margin-top:2px">✅ ${esc(e.fix)}</div></div>`).join('')+'</div>':''}
+    </div>
+  </div>
+  <div class="dact">
+    <button class="btn btn-red btn-sm" onclick="delSub('${s.id}',event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>Xóa
+    </button>
+    <button class="btn btn-bl btn-sm" onclick='dlPDF(${JSON.stringify(s).replace(/'/g,"\\'")} ,event)'>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="12" y1="12" x2="12" y2="18"/><polyline points="9 15 12 18 15 15"/></svg>Tải PDF
+    </button>
+  </div>
+</div></div>`;
+  });
+  html+='</div>';
+  wrap.innerHTML=html;
+}
+
+function togDet(id,row){
+  const det=document.getElementById(id); if(!det) return;
+  const btn=row.querySelector('.xbtn');
+  const open=det.classList.contains('open');
+  document.querySelectorAll('.det.open').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.xbtn.open').forEach(b=>b.classList.remove('open'));
+  if(!open){det.classList.add('open');btn?.classList.add('open');}
+}
+
+async function delSub(id,e){
+  e?.stopPropagation();
+  if(!confirm('Xóa bài nộp này?')) return;
+  try{ await apip({action:'deleteSubmission',id}); toast('Đã xóa','ok'); await loadSubs(); }
+  catch(err){ toast('Lỗi: '+err.message,'err'); }
+}
+
+function exportCSV(){
+  if(!subs.length){toast('Chưa có dữ liệu','err');return;}
+  const rows=[['Họ tên','Đề bài','Loại','Overall','TA','CC','LR','GRA','Thời gian']];
+  subs.forEach(s=>{const r=s.result||{};rows.push([s.studentName,s.promptTitle,s.taskType==='task1'?'Task 1':'Task 2',r.overall??'',r.ta??'',r.cc??'',r.lr??'',r.gra??'',s.timestamp]);});
+  const csv=rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download='JulyEnglish_KetQua_'+new Date().toLocaleDateString('vi-VN').replace(/\//g,'-')+'.csv';
+  a.click(); toast('Đã xuất CSV','ok');
+}
+
+// ═══════════════════════════════════════════════════════
+//  TEACHER PDF
+// ═══════════════════════════════════════════════════════
+function dlPDF(sub,e){
+  e?.stopPropagation();
+  const r=sub.result||{};
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const W=210,M=18,CW=W-M*2;let y=20;
+  doc.setFillColor(10,61,107);doc.rect(0,0,W,28,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(15);doc.setFont('helvetica','bold');
+  doc.text('July English — Kết quả IELTS Writing',M,12);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');
+  doc.text('Kết quả bài kiểm tra Writing',M,20);
+  doc.text(sub.timestamp||new Date().toLocaleDateString('vi-VN'),W-M,20,{align:'right'});y=38;
+  doc.setTextColor(28,28,30);doc.setFontSize(13);doc.setFont('helvetica','bold');doc.text(sub.studentName||'',M,y);y+=6;
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(90,90,110);
+  doc.text((sub.taskType==='task2'?'Writing Task 2':'Writing Task 1')+' — '+(sub.promptTitle||''),M,y);y+=10;
+  doc.setFillColor(10,61,107);doc.roundedRect(M,y,CW,22,3,3,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('OVERALL BAND SCORE',M+6,y+8);
+  doc.setFontSize(20);doc.setFont('helvetica','bold');doc.text(String(r.overall??'—'),M+6,y+18);
+  [{lbl:'TA',val:r.ta},{lbl:'CC',val:r.cc},{lbl:'LR',val:r.lr},{lbl:'GRA',val:r.gra}].forEach((c,i)=>{
+    const cx=M+62+i*36;doc.setFontSize(8);doc.setFont('helvetica','normal');doc.text(c.lbl,cx,y+8);
+    doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(String(c.val??'—'),cx,y+18);
+  });y+=30;
+  const pContent=prompts.find(p=>p.id===sub.promptId)?.content||sub.promptTitle||'';
+  doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(60,60,75);doc.text('ĐỀ BÀI',M,y);y+=5;
+  doc.setFillColor(248,245,240);const pL=doc.splitTextToSize(pContent,CW-8);
+  doc.rect(M,y,CW,pL.length*4.2+5,'F');doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(28,28,30);
+  doc.text(pL,M+4,y+4);y+=pL.length*4.2+10;
+  doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(60,60,75);doc.text('BÀI LÀM HỌC SINH',M,y);y+=5;
+  doc.setFillColor(250,248,245);const eL=doc.splitTextToSize(sub.essay||'',CW-8);
+  const eVis=eL.slice(0,Math.floor(90/4.2));const eH=eVis.length*4.2+6;
+  doc.rect(M,y,CW,eH,'F');doc.setFontSize(7.5);doc.setFont('helvetica','normal');doc.setTextColor(40,40,55);
+  doc.text(eVis,M+4,y+4);if(eL.length>eVis.length){doc.setTextColor(130,130,145);doc.text('...',M+4,y+eH-3);}y+=eH+8;
+  if(y>245){doc.addPage();y=20;}
+  doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(10,61,107);doc.text('NHẬN XÉT',M,y);y+=5;
+  const cL=doc.splitTextToSize(r.comment||'',CW);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(40,40,55);doc.text(cL,M,y);y+=cL.length*5+8;
+  if(r.errors?.length){
+    if(y>252){doc.addPage();y=20;}
+    doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(139,26,26);doc.text('LỖI SAI',M,y);y+=5;
+    r.errors.forEach(err=>{
+      if(y>265){doc.addPage();y=20;}
+      const l1=doc.splitTextToSize('✗  '+err.original+'  →  '+err.fix,CW-8);
+      const l2=doc.splitTextToSize(err.explanation||'',CW-8);const h=(l1.length+l2.length)*4.2+5;
+      doc.setFillColor(253,240,240);doc.rect(M,y,CW,h,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(139,26,26);doc.text(l1,M+4,y+4);
+      doc.setFont('helvetica','italic');doc.setTextColor(80,80,95);doc.text(l2,M+4,y+4+l1.length*4.2);y+=h+3;
+    });
+  }
+  doc.setFontSize(7.5);doc.setTextColor(155,155,165);doc.setFont('helvetica','normal');
+  doc.text('July English — IELTS Writing',W/2,290,{align:'center'});
+  doc.save('BaoCao_'+(sub.studentName||'').replace(/\s+/g,'_')+'.pdf');
+  toast('Đã tải PDF!','ok');
+}
+
+// ═══════════════════════════════════════════════════════
+//  ADMIN AUTH
+// ═══════════════════════════════════════════════════════
+function doLogin(){
+  const pw=document.getElementById('pwinput').value;
+  if(pw===ADMIN_PW){
+    document.getElementById('alock').style.display='none';
+    document.getElementById('acontent').style.display='block';
+    const u=getURL(); if(u) document.getElementById('url-input').value=u;
+    loadPrompts();
+  }else{
+    document.getElementById('pwerr').style.display='block';
+    document.getElementById('pwinput').value='';
+  }
+}
+function doLogout(){
+  document.getElementById('alock').style.display='block';
+  document.getElementById('acontent').style.display='none';
+  document.getElementById('pwinput').value='';
+  document.getElementById('pwerr').style.display='none';
+}
+
+// ═══════════════════════════════════════════════════════
+//  API URL CONFIG
+// ═══════════════════════════════════════════════════════
+function toggleAPI(){const bar=document.getElementById('apibar');bar.style.display=bar.style.display==='flex'?'none':'flex';}
+function saveURL(){
+  const v=document.getElementById('url-input').value.trim();
+  if(!v){toast('Nhập URL trước!','err');return;}
+  localStorage.setItem(URL_KEY,v);
+  toast('Đã lưu URL! Học sinh có thể dùng ngay.','ok');
+  document.getElementById('apibar').style.display='none';
+}
+
+// ═══════════════════════════════════════════════════════
+//  ADMIN FORM
+// ═══════════════════════════════════════════════════════
+function setFT(t,btn){
+  ftype_form=t;
+  document.querySelectorAll('.tt').forEach(b=>b.className='tt');
+  btn.className='tt '+(t==='task1'?'t1':'t2');
+  document.getElementById('imgfield').style.display=t==='task1'?'block':'none';
+}
+function handleImg(e){
+  const file=e.target.files[0]; if(!file) return;
+  if(file.size>5*1024*1024){toast('Ảnh quá lớn (tối đa 5MB)','err');return;}
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    fimg=ev.target.result;
+    const prev=document.getElementById('uprev');prev.src=fimg;prev.style.display='block';
+    document.getElementById('uzone').classList.add('has');
+    document.getElementById('utxt').textContent='✓ Ảnh đã chọn — click để đổi';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function savePrompt(){
+  const title=document.getElementById('f-title').value.trim();
+  const content=document.getElementById('f-content').value.trim();
+  if(!title){toast('Nhập tiêu đề đề bài!','err');return;}
+  if(!content){toast('Nhập nội dung đề bài!','err');return;}
+  try{
+    const body={action:'savePrompt',type:ftype_form,title,content,image:ftype_form==='task1'?(fimg||null):null};
+    if(editId) body.id=editId;
+    await apip(body);
+    toast(editId?'Đã cập nhật đề bài!':'Đã lưu đề bài!','ok');
+    editId=null; resetFormAdmin(); await loadPrompts();
+  }catch(e){ toast('Lỗi: '+e.message,'err'); }
+}
+
+function editPrompt(id){
+  const p=prompts.find(x=>x.id===id); if(!p) return;
+  editId=id; ftype_form=p.type;
+  document.getElementById('f-title').value=p.title;
+  document.getElementById('f-content').value=p.content;
+  document.getElementById('ftitle').textContent='✏️ Chỉnh sửa đề bài';
+  document.getElementById('cancelbtn').style.display='inline-flex';
+  document.querySelectorAll('.tt').forEach(b=>b.className='tt');
+  document.getElementById(p.type==='task1'?'ft1':'ft2').className='tt '+(p.type==='task1'?'t1':'t2');
+  document.getElementById('imgfield').style.display=p.type==='task1'?'block':'none';
+  if(p.image){fimg=p.image;const prev=document.getElementById('uprev');prev.src=p.image;prev.style.display='block';document.getElementById('uzone').classList.add('has');document.getElementById('utxt').textContent='✓ Ảnh đã có — click để đổi';}
+  document.getElementById('addcard').scrollIntoView({behavior:'smooth'});
+}
+
+async function deletePrompt(id){
+  if(!confirm('Xóa đề bài này?')) return;
+  try{ await apip({action:'deletePrompt',id}); toast('Đã xóa đề bài','ok'); await loadPrompts(); }
+  catch(e){ toast('Lỗi: '+e.message,'err'); }
+}
+
+function cancelEdit(){editId=null;document.getElementById('ftitle').textContent='✚ Thêm đề bài mới';document.getElementById('cancelbtn').style.display='none';resetFormAdmin();}
+function resetFormAdmin(){document.getElementById('f-title').value='';document.getElementById('f-content').value='';fimg=null;document.getElementById('uprev').style.display='none';document.getElementById('uzone').classList.remove('has');document.getElementById('utxt').textContent='📁 Kéo thả hoặc click để chọn ảnh';document.getElementById('upfile').value='';}
+
+async function loadPrompts(){
+  document.getElementById('plist').innerHTML='<div class="spinner"></div>';
+  try{
+    const d=await apig({action:'getPrompts'});
+    prompts=d.prompts||[];
+    document.getElementById('pcnt').textContent=prompts.length;
+    if(!prompts.length){document.getElementById('plist').innerHTML='<div class="ep">Chưa có đề bài nào. Thêm đề bài bên dưới.</div>';return;}
+    document.getElementById('plist').innerHTML=prompts.map(p=>`
+<div class="pi">
+  <div class="pico ${p.type==='task1'?'pt1':'pt2'}">${p.type==='task1'?'📊':'📝'}</div>
+  <div class="pinfo"><div class="ptitle">${esc(p.title)}</div><div class="pmeta">${p.type==='task1'?'Writing Task 1':'Writing Task 2'}${p.image?' · 🖼 Có hình':''} · ${esc(p.content.substring(0,65))}…</div></div>
+  <div class="pact">
+    <button class="btn btn-sec btn-sm" onclick="editPrompt('${p.id}')">✏️ Sửa</button>
+    <button class="btn btn-red btn-sm" onclick="deletePrompt('${p.id}')">✕ Xóa</button>
+  </div>
+</div>`).join('');
+  }catch(e){document.getElementById('plist').innerHTML=`<div class="ep">⚠️ ${esc(e.message)}</div>`;}
+}
+
+// ═══════════════════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════════════════
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function toast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);}
+</script>
+</body>
+</html>
