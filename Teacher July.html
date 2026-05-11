@@ -282,7 +282,11 @@ async function apig(p){
 }
 async function apip(b){
   const url=getURL(); if(!url) throw new Error('Chưa cấu hình URL.');
-  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+  // GET thay POST để tránh CORS với Apps Script
+  const p=new URLSearchParams(Object.fromEntries(
+    Object.entries(b).map(([k,v])=>[k, typeof v==='object'?JSON.stringify(v):String(v)])
+  ));
+  const r=await fetch(url+'?'+p);
   const d=await r.json(); if(!d.ok) throw new Error(d.error); return d;
 }
 
