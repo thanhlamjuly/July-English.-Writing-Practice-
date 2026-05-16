@@ -394,56 +394,90 @@ function exportCSV(){
 function dlPDF(sub,e){
   e?.stopPropagation();
   const r=sub.result||{};
-  const{jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const W=210,M=18,CW=W-M*2;let y=20;
-  doc.setFillColor(10,61,107);doc.rect(0,0,W,28,'F');
-  doc.setTextColor(255,255,255);doc.setFontSize(15);doc.setFont('helvetica','bold');
-  doc.text('July English — Kết quả IELTS Writing',M,12);
-  doc.setFontSize(9);doc.setFont('helvetica','normal');
-  doc.text('Kết quả bài kiểm tra Writing',M,20);
-  doc.text(sub.timestamp||new Date().toLocaleDateString('vi-VN'),W-M,20,{align:'right'});y=38;
-  doc.setTextColor(28,28,30);doc.setFontSize(13);doc.setFont('helvetica','bold');doc.text(sub.studentName||'',M,y);y+=6;
-  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(90,90,110);
-  doc.text((sub.taskType==='task2'?'Writing Task 2':'Writing Task 1')+' — '+(sub.promptTitle||''),M,y);y+=10;
-  doc.setFillColor(10,61,107);doc.roundedRect(M,y,CW,22,3,3,'F');
-  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('OVERALL BAND SCORE',M+6,y+8);
-  doc.setFontSize(20);doc.setFont('helvetica','bold');doc.text(String(r.overall??'—'),M+6,y+18);
-  [{lbl:'TA',val:r.ta},{lbl:'CC',val:r.cc},{lbl:'LR',val:r.lr},{lbl:'GRA',val:r.gra}].forEach((c,i)=>{
-    const cx=M+62+i*36;doc.setFontSize(8);doc.setFont('helvetica','normal');doc.text(c.lbl,cx,y+8);
-    doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(String(c.val??'—'),cx,y+18);
-  });y+=30;
-  const pContent=prompts.find(p=>p.id===sub.promptId)?.content||sub.promptTitle||'';
-  doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(60,60,75);doc.text('ĐỀ BÀI',M,y);y+=5;
-  doc.setFillColor(248,245,240);const pL=doc.splitTextToSize(pContent,CW-8);
-  doc.rect(M,y,CW,pL.length*4.2+5,'F');doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(28,28,30);
-  doc.text(pL,M+4,y+4);y+=pL.length*4.2+10;
-  doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(60,60,75);doc.text('BÀI LÀM HỌC SINH',M,y);y+=5;
-  doc.setFillColor(250,248,245);const eL=doc.splitTextToSize(sub.essay||'',CW-8);
-  const eVis=eL.slice(0,Math.floor(90/4.2));const eH=eVis.length*4.2+6;
-  doc.rect(M,y,CW,eH,'F');doc.setFontSize(7.5);doc.setFont('helvetica','normal');doc.setTextColor(40,40,55);
-  doc.text(eVis,M+4,y+4);if(eL.length>eVis.length){doc.setTextColor(130,130,145);doc.text('...',M+4,y+eH-3);}y+=eH+8;
-  if(y>245){doc.addPage();y=20;}
-  doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(10,61,107);doc.text('NHẬN XÉT',M,y);y+=5;
-  const cL=doc.splitTextToSize(r.comment||'',CW);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(40,40,55);doc.text(cL,M,y);y+=cL.length*5+8;
-  if(r.errors?.length){
-    if(y>252){doc.addPage();y=20;}
-    doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(139,26,26);doc.text('LỖI SAI',M,y);y+=5;
-    r.errors.forEach(err=>{
-      if(y>265){doc.addPage();y=20;}
-      const l1=doc.splitTextToSize('✗  '+err.original+'  →  '+err.fix,CW-8);
-      const l2=doc.splitTextToSize(err.explanation||'',CW-8);const h=(l1.length+l2.length)*4.2+5;
-      doc.setFillColor(253,240,240);doc.rect(M,y,CW,h,'F');
-      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(139,26,26);doc.text(l1,M+4,y+4);
-      doc.setFont('helvetica','italic');doc.setTextColor(80,80,95);doc.text(l2,M+4,y+4+l1.length*4.2);y+=h+3;
-    });
-  }
-  doc.setFontSize(7.5);doc.setTextColor(155,155,165);doc.setFont('helvetica','normal');
-  doc.text('July English — IELTS Writing',W/2,290,{align:'center'});
-  doc.save('BaoCao_'+(sub.studentName||'').replace(/\s+/g,'_')+'.pdf');
-  toast('Đã tải PDF!','ok');
-}
 
+  const errHtml=(r.errors||[]).map(e=>`
+    <div class="err-block">
+      <div class="err-line">
+        <span class="err-wrong">✗ <s>${esc(e.original)}</s></span>
+        <span class="err-arrow"> → </span>
+        <span class="err-fix"><strong>${esc(e.fix)}</strong></span>
+      </div>
+      <div class="err-exp">${esc(e.explanation)}</div>
+    </div>`).join('');
+
+  const sugHtml=(r.suggestions||[]).map(s=>`
+    <div class="sug-block">→ <strong>${esc(s)}</strong></div>`).join('');
+
+  const pContent=prompts.find(p=>p.id===sub.promptId)?.content||sub.promptTitle||'';
+
+  const html=`<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Báo cáo — ${esc(sub.studentName)}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Be Vietnam Pro',sans-serif;font-size:11pt;color:#1C1C1E;background:#fff;padding:20mm 18mm}
+  .header{background:#0A3D6B;color:#fff;padding:12px 18px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .header-logo{font-size:15pt;font-weight:700}.header-logo em{color:#7EC8A0;font-style:italic}
+  .header-date{font-size:9pt;opacity:.8}
+  .meta-name{font-size:14pt;font-weight:700;margin-bottom:3px}
+  .meta-task{font-size:9pt;color:#666;margin-bottom:14px}
+  .score-banner{background:linear-gradient(135deg,#0A3D6B,#082e52);color:#fff;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:24px;margin-bottom:14px}
+  .score-overall{text-align:center}.score-overall .num{font-size:36pt;font-weight:700;line-height:1}.score-overall .lbl{font-size:7pt;opacity:.7;letter-spacing:.1em}
+  .score-divider{width:1px;background:rgba(255,255,255,.2);height:40px}
+  .score-crits{display:flex;gap:20px;flex:1}
+  .crit{text-align:center}.crit .num{font-size:18pt;font-weight:700}.crit .lbl{font-size:7pt;opacity:.7}
+  .section{margin-bottom:14px}
+  .sec-title{font-size:8pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#666;margin-bottom:6px;padding-bottom:4px;border-bottom:1.5px solid #eee}
+  .prompt-box{background:#F8F5F0;border-left:4px solid #1B5E3B;padding:10px 14px;border-radius:0 6px 6px 0;font-size:10pt;line-height:1.65;color:#333}
+  .essay-box{background:#FAFAFA;border:1px solid #E5E1D8;padding:12px 14px;border-radius:6px;font-size:10pt;line-height:1.8;color:#2C2C2E;white-space:pre-wrap}
+  .comment-box{font-size:10.5pt;line-height:1.75;color:#2C2C2E;font-style:italic}
+  .err-block{background:#FEF2F2;border-left:3px solid #E24B4A;padding:8px 12px;margin-bottom:8px;border-radius:0 6px 6px 0}
+  .err-line{font-size:10pt;margin-bottom:3px}
+  .err-wrong{color:#9B1C1C}
+  .err-arrow{color:#666;font-weight:600}
+  .err-fix{color:#1B5E3B;font-size:10.5pt}
+  .err-fix strong{font-weight:700}
+  .err-exp{font-size:9pt;color:#666;font-style:italic}
+  .sug-block{background:#E8F5EE;border-left:3px solid #34A56F;padding:8px 12px;margin-bottom:7px;border-radius:0 6px 6px 0;font-size:10pt;line-height:1.6;color:#1B5E3B}
+  .sug-block strong{font-weight:600}
+  .footer{margin-top:20px;text-align:center;font-size:8pt;color:#aaa;border-top:1px solid #eee;padding-top:10px}
+  @media print{body{padding:10mm 12mm}@page{margin:8mm}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">July <em>English</em> — IELTS Writing</div>
+  <div class="header-date">${sub.timestamp||new Date().toLocaleDateString('vi-VN')}</div>
+</div>
+<div class="meta-name">${esc(sub.studentName)}</div>
+<div class="meta-task">${sub.taskType==='task2'?'Writing Task 2':'Writing Task 1'} — ${esc(sub.promptTitle||'')}</div>
+<div class="score-banner">
+  <div class="score-overall"><div class="num">${r.overall??'—'}</div><div class="lbl">OVERALL BAND</div></div>
+  <div class="score-divider"></div>
+  <div class="score-crits">
+    <div class="crit"><div class="num">${r.ta??'—'}</div><div class="lbl">TA</div></div>
+    <div class="crit"><div class="num">${r.cc??'—'}</div><div class="lbl">CC</div></div>
+    <div class="crit"><div class="num">${r.lr??'—'}</div><div class="lbl">LR</div></div>
+    <div class="crit"><div class="num">${r.gra??'—'}</div><div class="lbl">GRA</div></div>
+  </div>
+</div>
+<div class="section"><div class="sec-title">Đề bài</div><div class="prompt-box">${esc(pContent)}</div></div>
+<div class="section"><div class="sec-title">Bài làm của học sinh</div><div class="essay-box">${esc(sub.essay||'')}</div></div>
+<div class="section"><div class="sec-title">Nhận xét tổng thể</div><div class="comment-box">${esc(r.comment||'')}</div></div>
+${errHtml?`<div class="section"><div class="sec-title">Lỗi sai cần sửa</div>${errHtml}</div>`:''}
+${sugHtml?`<div class="section"><div class="sec-title">Gợi ý cải thiện</div>${sugHtml}</div>`:''}
+<div class="footer">July English — IELTS Writing</div>
+</body></html>`;
+
+  const w=window.open('','_blank','width=900,height=700');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(),800);
+  toast('Đang mở cửa sổ in — chọn Save as PDF!','ok');
+}
 // ═══════════════════════════════════════════════════════
 //  ADMIN AUTH
 // ═══════════════════════════════════════════════════════
